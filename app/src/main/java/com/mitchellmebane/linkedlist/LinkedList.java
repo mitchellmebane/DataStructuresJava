@@ -2,7 +2,6 @@ package com.mitchellmebane.linkedlist;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.function.Function;
 import java.util.stream.Collector;
 
 public class LinkedList<T> implements Iterable<T> {
