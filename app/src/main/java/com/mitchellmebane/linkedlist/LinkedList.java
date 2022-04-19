@@ -16,6 +16,7 @@ public class LinkedList<T> implements Iterable<T> {
     }
 
     private ListNode<T> head;
+    private ListNode<T> tail;
 
     ListNode<T> getHead() {
         if (this.head == null) {
@@ -24,16 +25,10 @@ public class LinkedList<T> implements Iterable<T> {
         return this.head;
     }
     ListNode<T> getTail() {
-        if (this.head == null) {
+        if (this.tail == null) {
             throw new NoSuchElementException();
         }
-        else {
-            ListNode<T> tail = this.head;
-            while (tail.next != null) {
-                tail = tail.next;
-            }
-            return tail;
-        }
+        return this.tail;
     }
 
     public boolean isEmpty() {
@@ -42,19 +37,26 @@ public class LinkedList<T> implements Iterable<T> {
 
     public LinkedList() {
         this.head = null;
+        this.tail = null;
     }
 
     public void add(final T val) {
-        this.addNode(new ListNode<>(val));
+        final var newNode = new ListNode<>(val);
+        this.addNode(newNode);
     }
 
-    public void addNode(final ListNode<T> node) {
+    void addNode(final ListNode<T> node) {
+        if (node.next != null) {
+            throw new IllegalArgumentException("addNode can only add single nodes");
+        }
+
         if (this.head == null) {
             this.head = node;
         }
         else {
-            this.getTail().next = node;
+            this.tail.next = node;
         }
+        this.tail = node;
     }
 
     public LinkedList<T> combine(final LinkedList<T> other) {
@@ -109,7 +111,7 @@ public class LinkedList<T> implements Iterable<T> {
                 throw new NoSuchElementException();
             }
             final ListNode<T> next = this.next;
-            this.next = this.next.next;
+            this.next = next.next;
             return next.val;
         }
 
