@@ -6,22 +6,32 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 
 public class LinkedList<T> implements Iterable<T> {
+    static class ListNode<T> {
+        T val;
+        ListNode<T> next;
+
+        ListNode(final T val) {
+            this.val = val;
+            this.next = null;
+        }
+    }
+
     private ListNode<T> head;
 
-    public ListNode<T> getHead() {
+    ListNode<T> getHead() {
         if (this.head == null) {
             throw new NoSuchElementException();
         }
         return this.head;
     }
-    public ListNode<T> getTail() {
+    ListNode<T> getTail() {
         if (this.head == null) {
             throw new NoSuchElementException();
         }
         else {
             ListNode<T> tail = this.head;
-            while (tail.getNext() != null) {
-                tail = tail.getNext();
+            while (tail.next != null) {
+                tail = tail.next;
             }
             return tail;
         }
@@ -44,7 +54,7 @@ public class LinkedList<T> implements Iterable<T> {
             this.head = node;
         }
         else {
-            this.getTail().setNext(node);
+            this.getTail().next = node;
         }
     }
 
@@ -68,7 +78,7 @@ public class LinkedList<T> implements Iterable<T> {
             }
             else {
                 final ListNode<T> next = new ListNode<>(el);
-                newTail.setNext(next);
+                newTail.next = next;
                 newTail = next;
             }
         }
@@ -100,8 +110,8 @@ public class LinkedList<T> implements Iterable<T> {
                 throw new NoSuchElementException();
             }
             final ListNode<T> next = this.next;
-            this.next = this.next.getNext();
-            return next.getVal();
+            this.next = this.next.next;
+            return next.val;
         }
 
         LinkedListIterator(final ListNode<T> first) {
