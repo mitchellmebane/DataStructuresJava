@@ -17,6 +17,7 @@ public class LinkedList<T> implements Iterable<T> {
 
     private ListNode<T> head;
     private ListNode<T> tail;
+    private int size;
 
     ListNode<T> getHead() {
         if (this.head == null) {
@@ -31,13 +32,18 @@ public class LinkedList<T> implements Iterable<T> {
         return this.tail;
     }
 
+    public int size() {
+        return this.size;
+    }
+
     public boolean isEmpty() {
-        return this.head == null;
+        return this.size == 0;
     }
 
     public LinkedList() {
         this.head = null;
         this.tail = null;
+        this.size = 0;
     }
 
     public void add(final T val) {
@@ -57,6 +63,20 @@ public class LinkedList<T> implements Iterable<T> {
             this.tail.next = node;
         }
         this.tail = node;
+
+        ++this.size;
+    }
+
+    void addNode(final ListNode<T> node, final int size) {
+        if (this.head == null) {
+            this.head = node;
+        }
+        else {
+            this.tail.next = node;
+        }
+        this.tail = node;
+
+        this.size += size;
     }
 
     public LinkedList<T> combine(final LinkedList<T> other) {
@@ -72,6 +92,7 @@ public class LinkedList<T> implements Iterable<T> {
 
         ListNode<T> newHead = null, newTail = null;
 
+        int numEls = 0;
         for(T el : c) {
             if (newHead == null) {
                 newHead = new ListNode<>(el);
@@ -82,11 +103,12 @@ public class LinkedList<T> implements Iterable<T> {
                 newTail.next = next;
                 newTail = next;
             }
+            ++numEls;
         }
 
         if (newHead != null) {
             changed = true;
-            this.addNode(newHead);
+            this.addNode(newHead, numEls);
         }
 
         return changed;

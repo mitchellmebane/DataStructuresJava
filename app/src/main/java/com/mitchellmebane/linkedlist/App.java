@@ -6,7 +6,7 @@ public class App {
 
     public static void main(final String[] args) {
         final LinkedList<Integer> il = new Random()
-                .ints(10, 1, 100)
+                .ints(20, 1, 100)
                 .boxed()
                 .sorted()
                 .collect(LinkedList.collector());
@@ -21,6 +21,7 @@ public class App {
             first = false;
         }
 
+        System.out.println(String.format("# ints: %d", il.size()));
         System.out.println("Ints:");
         System.out.println(sb);
     }
